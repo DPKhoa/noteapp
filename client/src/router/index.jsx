@@ -5,27 +5,38 @@ import Home from "../pages/Home";
 import AuthProvider from "../context/AuthProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
+import NodeList from "../components/NodeList";
 
 const AuthLayout = () => {
-  return <AuthProvider><Outlet /></AuthProvider>;
+  return (
+    <AuthProvider>
+      <Outlet />
+    </AuthProvider>
+  );
 };
 export default createBrowserRouter([
   {
-    element: <AuthLayout/>,
-    errorElement: <ErrorPage/>,
+    element: <AuthLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <Login />,
         path: "/login",
       },
       {
-        element: <ProtectedRoute/>,
-       children:[
-        {
-          element:<Home/>,
-          path: "/",
-        }
-       ],
+        element: <ProtectedRoute />,
+        children: [
+          {
+            element: <Home />,
+            path: "/",
+            children: [
+              {
+                element: <NodeList />,
+                path: "folders/:folderId",
+              },
+            ],
+          },
+        ],
       },
     ],
   },
