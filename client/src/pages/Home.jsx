@@ -1,9 +1,17 @@
-
+import { Box, Typography } from "@mui/material";
 // eslint-disable-next-line no-unused-vars
-import React from 'react'
+import React from "react";
+import UserMenu from "../components/UserMenu";
 
 export default function Home() {
   return (
-    <div>Home</div>
-  )
+    <>
+      <Typography variant="h4" sx={{ mb: "20px" }}>
+        Note App
+      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "right", mb: "10px" }}>
+        <UserMenu />
+      </Box>
+    </>
+  );
 }
