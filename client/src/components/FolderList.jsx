@@ -27,7 +27,11 @@ export default function FolderList({ folders }) {
     >
       {folders.map(({ id, name }) => {
         return (
-          <Link key={id} to={`folder/${id}`} style={{ textDecoration: "none" }}>
+          <Link
+            key={id}
+            to={`folders/${id}`}
+            style={{ textDecoration: "none" }}
+          >
             <Card sx={{ mb: "5px" }}>
               <CardContent
                 sx={{ "&:last-child:": { pb: "10px" }, padding: "10px" }}
