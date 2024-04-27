@@ -1,10 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import { Box, Card, CardContent, Grid, List, Typography } from "@mui/material";
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Outlet, useParams } from "react-router-dom";
 
 export default function NodeList() {
+  const { noteId } = useParams();
+  const [activeNoteId, setActiveNoteId] = useState(noteId);
   const folder = { notes: [{ id: "1", content: "<p>This is new note</p>" }] };
   return (
     <Grid container height="100%">
@@ -34,8 +36,14 @@ export default function NodeList() {
                 key={id}
                 to={`note/${id}`}
                 style={{ textDecoration: "none" }}
+                onClick={() => setActiveNoteId(id)}
               >
-                <Card sx={{ mb: "5px" }}>
+                <Card
+                  sx={{
+                    mb: "5px",
+                    bgcolor: id === activeNoteId ? "rgb(255 211 140 )" : null,
+                  }}
+                >
                   <CardContent
                     sx={{ "&:last-child": { pb: "10px" }, padding: "10px" }}
                   >

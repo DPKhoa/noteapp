@@ -2,11 +2,14 @@
 // eslint-disable-next-line no-unused-vars
 import { Box, Card, CardContent, List, Typography } from "@mui/material";
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 export default function FolderList({ folders }) {
+  const { folderId } = useParams();
+  const [activeFolderId, setActiveFolderId] = useState(folderId);
+  // console.log({ folderId });
   return (
     <List
       sx={{
@@ -30,13 +33,23 @@ export default function FolderList({ folders }) {
           <Link
             key={id}
             to={`folders/${id}`}
-            style={{ textDecoration: "none" }}
+            style={{
+              textDecoration: "none",
+            }}
+            onClick={() => setActiveFolderId(id)}
           >
-            <Card sx={{ mb: "5px" }}>
+            <Card
+              sx={{
+                mb: "5px",
+                bgcolor: id === activeFolderId ? "rgb(255 211 140 )" : null,
+              }}
+            >
               <CardContent
                 sx={{ "&:last-child:": { pb: "10px" }, padding: "10px" }}
               >
-                <Typography>{name}</Typography>
+                <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
+                  {name}
+                </Typography>
               </CardContent>
             </Card>
           </Link>
