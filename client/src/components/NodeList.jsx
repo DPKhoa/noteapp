@@ -2,12 +2,13 @@
 import { Box, Card, CardContent, Grid, List, Typography } from "@mui/material";
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useLoaderData, useParams } from "react-router-dom";
 
 export default function NodeList() {
   const { noteId } = useParams();
   const [activeNoteId, setActiveNoteId] = useState(noteId);
-  const folder = { notes: [{ id: "1", content: "<p>This is new note</p>" }] };
+  const { folder } = useLoaderData();
+  // const folder = { notes: [{ id: "1", content: "<p>This is new note</p>" }] };
   return (
     <Grid container height="100%">
       <Grid

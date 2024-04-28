@@ -30,4 +30,21 @@ export default {
       authorId: 123,
     },
   ],
+  notes: [
+    {
+      id: "123",
+      content: "<p>Go to supermarket</p>",
+      folderId: "1",
+    },
+    {
+      id: "234",
+      content: "<p>Go to park</p>",
+      folderId: "2",
+    },
+    {
+      id: "456",
+      content: "<p>Go to school</p>",
+      folderId: "2",
+    },
+  ],
 };

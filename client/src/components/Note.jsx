@@ -7,7 +7,7 @@ import {
   ContentState,
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
-import { draftToHtml } from "draftjs-to-html";
+import draftToHtml from "draftjs-to-html";
 export default function Note() {
   const note = {
     id: "9999",
@@ -32,9 +32,13 @@ export default function Note() {
   }, [note.content]);
   const handleOnChange = (e) => {
     setEditorState(e);
-    setRawHTML(draftToHtml(convertToRaw(e.getCurrentContext())));
+    setRawHTML(draftToHtml(convertToRaw(e.getCurrentContent())));
   };
   return (
-    <Editor EditorState={editorState} onEditorStateChange={handleOnChange} />
+    <Editor
+      editorState={editorState}
+      onEditorStateChange={handleOnChange}
+      placeholder="Write something!"
+    />
   );
 }
