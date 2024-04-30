@@ -7,6 +7,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
 import NodeList from "../components/NodeList";
 import Note from "../components/Note";
+import { NotesLoader, noteLoader } from "../utils/noteUtil";
+import { FoldersLoader } from "../utils/FolderUltil";
 
 const AuthLayout = () => {
   return (
@@ -30,65 +32,17 @@ export default createBrowserRouter([
           {
             element: <Home />,
             path: "/",
-            loader: async () => {
-              const query = ` query ExampleQuery {
-                folders{
-                  id
-                  name
-                  createdAt
-                }
-              }`;
-              const res = await fetch("http://localhost:4000/graphql", {
-                method: "POST",
-                headers: {
-                  "content-type": "application/json",
-                  Accept: "application/json",
-                },
-                body: JSON.stringify({
-                  query,
-                }),
-              });
-              const { data } = await res.json();
-              console.log({ data });
-              return data;
-            },
+            loader: FoldersLoader,
             children: [
               {
                 element: <NodeList />,
                 path: "folders/:folderId",
-                loader: async ({ params: { folderId } }) => {
-                  // console.log({ params });
-                  const query = `query Folder($folderId: String) {
-                    folder(folderId: $folderId) {
-                      id,
-                      name,
-                      notes {
-                        id,
-                        content
-                      }
-                    }
-                  }`;
-                  const res = await fetch("http://localhost:4000/graphql", {
-                    method: "POST",
-                    headers: {
-                      "content-type": "application/json",
-                      Accept: "application/json",
-                    },
-                    body: JSON.stringify({
-                      query,
-                      variables: {
-                        folderId,
-                      },
-                    }),
-                  });
-                  const { data } = await res.json();
-                  console.log("data 2", { data });
-                  return data;
-                },
+                loader: NotesLoader,
                 children: [
                   {
                     element: <Note />,
                     path: "note/:noteId",
+                    loader: noteLoader,
                   },
                 ],
               },

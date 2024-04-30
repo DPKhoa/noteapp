@@ -30,6 +30,7 @@ const typeDefs = `#graphql
     type Query{
      folders: [Folder]
      folder(folderId: String): Folder
+     note(noteId: String): Note
     }
    
 `;
@@ -42,6 +43,10 @@ const resolvers = {
       const folderId = args.folderId;
       return fakeData.folders.find((folder) => folder.id === folderId);
       console.log(folderId);
+    },
+    note: (parent, args) => {
+      const nodeId = args.noteId;
+      return fakeData.notes.find((note) => note.id === nodeId);
     },
   },
   Folder: {
