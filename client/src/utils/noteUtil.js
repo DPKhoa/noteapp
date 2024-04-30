@@ -27,7 +27,7 @@ export const NotesLoader = async ({ params: { folderId } }) => {
   console.log("data 2", { data });
   return data;
 };
-export const noteLoader = async ({ params: { NoteId } }) => {
+export const noteLoader = async ({ params: { noteId } }) => {
   // console.log({ params });
   const query = `query Folder($noteId: String) {
     note(noteId: $noteId) {
@@ -44,7 +44,7 @@ export const noteLoader = async ({ params: { NoteId } }) => {
     body: JSON.stringify({
       query,
       variables: {
-        NoteId,
+        noteId,
       },
     }),
   });

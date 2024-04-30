@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
@@ -12,9 +11,7 @@ import { Container } from "@mui/material";
 import "./firebase/config";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Container maxWidth="lg" sx={{ textAlign: "center", marginTop: "50px" }}>
-      <RouterProvider router={router}></RouterProvider>
-    </Container>
-  </React.StrictMode>
+  <Container maxWidth="lg" sx={{ textAlign: "center", marginTop: "50px" }}>
+    <RouterProvider router={router}></RouterProvider>
+  </Container>
 );
