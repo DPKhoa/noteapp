@@ -8,6 +8,7 @@ export const FoldersLoader = async () => {
         createdAt
       }
     }`;
-  const { data } = await graphQLRequest({ query });
+  const data = await graphQLRequest({ query });
+  console.log("abc", data);
   return data;
 };
