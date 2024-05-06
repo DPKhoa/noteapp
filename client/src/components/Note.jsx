@@ -12,6 +12,7 @@ import { useLoaderData } from "react-router-dom";
 
 export default function Note() {
   const { note } = useLoaderData();
+  console.log("note:", note);
 
   const [editorState, setEditorState] = useState(() => {
     return EditorState.createEmpty();

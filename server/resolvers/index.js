@@ -11,7 +11,7 @@ export const resolvers = {
     folder: async (parent, args) => {
       const folderId = args.folderId;
       const foundFolder = await FolderModel.find({
-        id: folderId,
+        _id: folderId,
       });
       return foundFolder;
     },
