@@ -26,26 +26,26 @@ const server = new ApolloServer({
 
 await server.start();
 
-const authorizationJWT = async (req, res, next) => {
-  const authorizationHeader = req.headers.authorization;
-  if (authorizationHeader) {
-    const accessToken = authorizationHeader.split(" ")[1];
-    getAuth()
-      .verifyIdToken(accessToken)
-      .then((decodedToken) => {
-        console.log("decodedToken:", decodedToken);
-        next();
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(403).json({ message: "Forbidden", error: err });
-      });
-  } else {
-    next();
-  }
-};
+// const authorizationJWT = async (req, res, next) => {
+//   const authorizationHeader = req.headers.authorization;
+//   if (authorizationHeader && authorizationHeader.startsWith("Bearer")) {
+//     const accessToken = authorizationHeader.split(" ")[1];
+//     getAuth()
+//       .verifyIdToken(accessToken)
+//       .then((decodedToken) => {
+//         console.log("decodedToken:", decodedToken);
+//         next();
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         return res.status(403).json({ message: "Forbidden", error: err });
+//       });
+//   } else {
+//     return res.status(401).json({ message: "Unauthorized" });
+//   }
+// };
 
-app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
+app.use(cors(), bodyParser.json(), expressMiddleware(server));
 
 mongoose.set("strictQuery", false);
 mongoose.connect(URI).then(async () => {

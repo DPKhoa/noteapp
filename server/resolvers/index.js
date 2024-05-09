@@ -1,4 +1,5 @@
 import fakeData from "../fakeData/index.js";
+import AuthorModel from "../models/AuthorModel.js";
 import FolderModel from "../models/FolderModel.js";
 
 export const resolvers = {
@@ -35,6 +36,15 @@ export const resolvers = {
       console.log({ newFolder });
       await newFolder.save();
       return newFolder;
+    },
+    register: async (parent, args) => {
+      const foundUser = await AuthorModel.findOne({ uid: args.uid });
+      if (!foundUser) {
+        const newUser = new AuthorModel(args);
+        await newUser.save();
+        return newUser;
+      }
+      return foundUser;
     },
   },
 };
