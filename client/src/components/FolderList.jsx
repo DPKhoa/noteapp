@@ -4,6 +4,7 @@ import { Box, Card, CardContent, List, Typography } from "@mui/material";
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import NewFolder from "./NewFolder";
 
 // eslint-disable-next-line react/prop-types
 export default function FolderList({ folders }) {
@@ -21,10 +22,17 @@ export default function FolderList({ folders }) {
         overflowY: "auto",
       }}
       subheader={
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography sx={{ fontWeight: "bold", color: "white" }}>
             Folder
           </Typography>
+          <NewFolder />
         </Box>
       }
     >

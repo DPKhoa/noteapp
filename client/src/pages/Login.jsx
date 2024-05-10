@@ -3,14 +3,13 @@ import { Button, Typography } from "@mui/material";
 // eslint-disable-next-line no-unused-vars
 import React, { useContext } from "react";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
-import { AuthContext } from "../context/AuthProvider";
+
 import { Navigate } from "react-router-dom";
 import { graphQLRequest } from "../utils/request";
 
 export default function Login() {
   const auth = getAuth();
   // const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
 
   const handleLoginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -31,7 +30,7 @@ export default function Login() {
     });
     console.log("register", { data });
   };
-  if (user?.uid) {
+  if (localStorage.getItem("accessToken")) {
     return <Navigate to="/" />;
   }
   return (

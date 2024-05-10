@@ -31,8 +31,8 @@ export const resolvers = {
     },
   },
   Mutation: {
-    addFolder: async (parent, args) => {
-      const newFolder = new FolderModel({ ...args, authorId: "123" });
+    addFolder: async (parent, args, context) => {
+      const newFolder = new FolderModel({ ...args, authorId: context.uid });
       console.log({ newFolder });
       await newFolder.save();
       return newFolder;
