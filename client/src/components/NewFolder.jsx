@@ -1,20 +1,49 @@
-// eslint-disable-next-line no-unused-vars
 import {
+  Button,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
   TextField,
   Tooltip,
 } from "@mui/material";
-// eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { CreateNewFolderOutlined } from "@mui/icons-material";
+import { addNewFolder } from "../utils/FolderUltil";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 export default function NewFolder() {
-  const [newFolderName, setNewFolderName] = useState();
-  const handleOpenPopUp = () => {};
-  const handleNewFolderNameChange = () => {};
+  const [newFolderName, setNewFolderName] = useState("");
+  const [open, setOpen] = useState(false);
+  const [searchParam, setSearchParam] = useSearchParams();
+  const popUpName = searchParam.get("popup");
+  const navigate = useNavigate();
+  const handleOpenPopUp = () => {
+    // setOpen(true);
+    setSearchParam({ popup: "add-folder" });
+  };
+  const handleClose = () => {
+    // setOpen(false);
+    setNewFolderName("");
+    navigate(-1);
+  };
+  const handleNewFolderNameChange = (e) => {
+    setNewFolderName(e.target.value);
+  };
+  const handleAddNewFolder = async () => {
+    const { addFolder } = await addNewFolder({ name: newFolderName });
+    console.log({ addFolder });
+    handleClose();
+  };
+  useEffect(() => {
+    if (popUpName == "add-folder") {
+      setOpen(true);
+      return;
+    }
+    setOpen(false);
+  }, [popUpName]);
   return (
     <div>
       <Tooltip title="Add Folder" onClick={handleOpenPopUp}>
@@ -22,7 +51,7 @@ export default function NewFolder() {
           <CreateNewFolderOutlined sx={{ color: "white" }} />
         </IconButton>
       </Tooltip>
-      <Dialog>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Folder</DialogTitle>
         <DialogContent>
           <TextField
@@ -39,6 +68,10 @@ export default function NewFolder() {
             onChange={handleNewFolderNameChange}
           ></TextField>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleAddNewFolder}>OK</Button>
+        </DialogActions>
       </Dialog>
     </div>
   );

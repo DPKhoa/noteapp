@@ -1,5 +1,5 @@
 export const typeDefs = `#graphql
-
+scalar Date
     type Folder {
       id: String!,
       name: String,
@@ -8,12 +8,13 @@ export const typeDefs = `#graphql
       notes:[Note]
     }
     type Note{
-      id: String,
+      id: String!,
       content: String,
+      updatedAt: Date
     }
     type Author {
-      uid: String,
-      name: String
+      uid: String!,
+      name: String!
     }
     type Query{
      folders: [Folder]
@@ -21,7 +22,8 @@ export const typeDefs = `#graphql
      note(noteId: String): Note
     }
    type Mutation{
-    addFolder(name: String!): Folder
+    addFolder(name: String!): Folder,
+    addNote(content: String!, folderId: ID!): Note,
     register(uid: String!, name: String!): Author
     
    }

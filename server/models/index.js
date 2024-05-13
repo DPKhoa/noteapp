@@ -1,10 +1,5 @@
-import NoteModel from "./NodeModel";
+import NoteModel from "./NoteModel";
 import FolderModel from "./FolderModel";
 import AuthorModel from "./AuthorModel";
 
-
-export{
-    NoteModel,
-    FolderModel,
-    AuthorModel
-}
+export { NoteModel, FolderModel, AuthorModel };

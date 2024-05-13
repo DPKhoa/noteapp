@@ -1,10 +1,10 @@
 import { graphQLRequest } from "./request";
 export const NotesLoader = async ({ params: { folderId } }) => {
   // console.log({ params });
-  const query = `query Folder($folderId: String) {
+  const query = `query Folder($folderId: String!) {
       folder(folderId: $folderId) {
         id,
-        name,
+        name
         notes {
           id,
           content
@@ -28,20 +28,29 @@ export const noteLoader = async ({ params: { noteId } }) => {
       id
     }
   }`;
-  const res = await fetch("http://localhost:4000/graphql", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      Accept: "application/json",
+  const data = await graphQLRequest({
+    query,
+    variables: {
+      noteId,
     },
-    body: JSON.stringify({
-      query,
-      variables: {
-        noteId,
-      },
-    }),
   });
-  const { data } = await res.json();
-  console.log("data 2", { data });
   return data;
+};
+// eslint-disable-next-line no-unused-vars
+export const addNewNote = async ({ params, request }) => {
+  const newNote = await request.formData();
+  const formDataObject = {};
+  newNote.forEach((value, key) => (formDataObject[key] = value));
+  const query = `mutation Mutation($content: String!, $folderId: ID!){
+    addNote(content: $content, folderId: $folderId){
+      id
+      content
+    }
+  }`;
+  const { addNote } = await graphQLRequest({
+    query,
+    variables: formDataObject,
+  });
+  console.log({ addNote });
+  return addNote;
 };
