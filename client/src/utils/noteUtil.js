@@ -1,7 +1,7 @@
 import { graphQLRequest } from "./request";
 export const NotesLoader = async ({ params: { folderId } }) => {
   // console.log({ params });
-  const query = `query Folder($folderId: String!) {
+  const query = `query Notes($folderId: String!) {
       folder(folderId: $folderId) {
         id,
         name
@@ -22,7 +22,7 @@ export const NotesLoader = async ({ params: { folderId } }) => {
 };
 export const noteLoader = async ({ params: { noteId } }) => {
   // console.log({ params });
-  const query = `query Folder($noteId: String) {
+  const query = `query Note($noteId: String) {
     note(noteId: $noteId) {
       content
       id

@@ -40,6 +40,16 @@ export default function NodeList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteId, folder?.notes]);
   // const folder = { notes: [{ id: "1", content: "<p>This is new note</p>" }] };
+  useEffect(() => {
+    if (noteId) {
+      setActiveNoteId(noteId);
+      return;
+    }
+    if (folder?.notes?.[0]) {
+      navigate(`note/${folder.notes[0].id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteId, folder.notes]);
   const handleAddNewNote = () => {
     submit(
       {
@@ -66,7 +76,13 @@ export default function NodeList() {
       >
         <List
           subheader={
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Typography sx={{ fontWeight: "bold" }}>Notes</Typography>
               <Tooltip title="Add Note" onClick={handleAddNewNote}>
                 <IconButton size="small">

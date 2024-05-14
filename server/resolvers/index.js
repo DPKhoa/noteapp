@@ -21,9 +21,11 @@ export const resolvers = {
       const foundFolder = await FolderModel.findById(folderId);
       return foundFolder;
     },
-    note: (parent, args) => {
+    note: async (parent, args) => {
       const nodeId = args.noteId;
-      return fakeData.notes.find((note) => note.id === nodeId);
+      const note = await NoteModel.findOne({ noteId });
+      // return fakeData.notes.find((note) => note.id === nodeId);
+      return note;
     },
   },
   Folder: {
@@ -49,8 +51,11 @@ export const resolvers = {
       await newNote.save();
       return newNote;
     },
+    updateNote: async(parent, args) {
+      
+    },
     addFolder: async (parent, args, context) => {
-      const newFolder = new FolderModel({ ...args, authorId: context.uid });
+      const newFolder = new FolderModel({ ...args, authorId: args.uid });
       console.log({ newFolder });
       await newFolder.save();
       return newFolder;

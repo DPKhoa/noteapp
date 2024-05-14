@@ -19,20 +19,26 @@ export default function Note() {
   });
 
   // eslint-disable-next-line no-unused-vars
-  const [rawHTML, setRawHTML] = useState(note.content);
+  const [rawHTML, setRawHTML] = useState(note?.content);
 
   useEffect(() => {
-    const blocksFromHTML = convertFromHTML(note.content);
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap
-    );
-    setEditorState(EditorState.createWithContent(state));
-  }, [note.id]);
+    const content = note?.content?.trim() || "";
+    const blocksFromHTML = content ? convertFromHTML(content) : null;
+    if (blocksFromHTML && blocksFromHTML.contentBlocks) {
+      const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+      setEditorState(EditorState.createWithContent(state));
+    } else {
+      // Handle the case where blocksFromHTML is null or malformed
+      setEditorState(EditorState.createEmpty());
+    }
+  }, [note?.content, note?.id]);
 
   useEffect(() => {
-    setRawHTML(note.content);
-  }, [note.content]);
+    setRawHTML(note?.content);
+  }, [note?.content]);
 
   const handleOnChange = (e) => {
     setEditorState(e);
