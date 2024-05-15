@@ -24,7 +24,7 @@ scalar Date
    type Mutation{
     addFolder(name: String!): Folder,
     addNote(content: String!, folderId: ID!): Note,
-    updateNote(content: String!, folderID: ID!):Note,
+    updateNote(id: String!,content: String!): Note,
     register(uid: String!, name: String!): Author
     
    }

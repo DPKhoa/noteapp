@@ -37,7 +37,7 @@ export const noteLoader = async ({ params: { noteId } }) => {
   return data;
 };
 // eslint-disable-next-line no-unused-vars
-export const addNewNote = async ({ params, request }) => {
+export const addNewNote = async ({ request }) => {
   const newNote = await request.formData();
   const formDataObject = {};
   newNote.forEach((value, key) => (formDataObject[key] = value));
@@ -53,4 +53,22 @@ export const addNewNote = async ({ params, request }) => {
   });
   console.log({ addNote });
   return addNote;
+};
+export const updateNote = async ({ request }) => {
+  const updatedNote = await request.formData();
+  const formDataObject = {};
+  updatedNote.forEach((value, key) => (formDataObject[key] = value));
+
+  const query = `mutation Mutation($id: String!, $content: String!){
+    updateNote(id: $id,content: $content){
+      id
+      content
+    }
+  }`;
+  const { updateNote } = await graphQLRequest({
+    query,
+    variables: formDataObject,
+  });
+  console.log({ updateNote });
+  return updateNote;
 };

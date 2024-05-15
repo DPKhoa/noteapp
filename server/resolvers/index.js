@@ -51,8 +51,11 @@ export const resolvers = {
       await newNote.save();
       return newNote;
     },
-    updateNote: async(parent, args) {
-      
+    updateNote: async (parent, args) => {
+      const noteId = args.id;
+      console.log({ noteId });
+      const note = await NoteModel.findByIdAndUpdate(noteId, args);
+      return note;
     },
     addFolder: async (parent, args, context) => {
       const newFolder = new FolderModel({ ...args, authorId: args.uid });
